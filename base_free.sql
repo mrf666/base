@@ -30,6 +30,7 @@ CREATE TABLE organization(
 `organization_title` varchar(100) NOT NULL,
 `organization_field`varchar(100) NOT NULL,
 `organization_status` int(1) NOT NULL,
+`site` varchar(100) NOT NULL,
 `country` varchar(100) NOT NULL,
 `city` varchar(20) NOT NULL,
 FOREIGN KEY(`order_id`) REFERENCES orders_from(`id`),

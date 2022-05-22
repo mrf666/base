@@ -34,15 +34,16 @@ organization_status = (
 
 
 organization = (
-"id"
-"order_id"
-"organization_title" 
-"organization_field"
-"organization_status"
-"country" 
+"id",
+"order_id",
+"organization_title" ,
+"organization_field",
+"organization_status",
+"site",
+"country" ,
 "city"
 )
-
+print(len(organization))
 
 contact_person_post = (
 "id",
@@ -74,12 +75,48 @@ def add_item(customer_id,item):
 	except pymysql.err.OperationalError as e:
 		print(e)
 
+def add_organization(org_str,organization_title,organization_field,city,site,organization_status="1",country="RU",order_id="1"):
+	try:
+		with conn.cursor() as cursor:
+			conn.autocommit(True)
+
+			add_org = f"insert into organization({org_str}) VALUES(%s,%s,%s,%s,%s,%s,%s)"
+			print(add_org)
+			cursor.execute(add_org,(order_id,organization_title,organization_field,organization_status,country,site,city))
+			print(add_org)
+	except pymysql.err.OperationalError as e:
+		print(e)
+			
+	print(order_id,organization_title,organization_field,organization_status,country,city)
+
+
+def add_contact(contact_str ,name,place_id ,number,email,order_id = "1",organization_id="2",status_id="1"):
+	print(organization_id,order_id,name,place_id,number,email,status_id)
+
+	with conn.cursor() as cursor:
+		conn.autocommit(True)
+
+		add_con = f"insert into contact_database({contact_str}) VALUES(%s,%s,%s,%s,%s,%s,%s)"
+		print(add_con)
+		cursor.execute(add_con,(str(organization_id), str(order_id), name,str(place_id),number,email,str(status_id)))
+		#cursor.execute(add_contact,(order_id,organization_title,organization_field,organization_status,country,site,city))
+
+org_str = ",".join(organization[1:8])
+print(org_str)
+#add_organization(org_str,input("Enter organization title:\n"),input("ENter organization field:\n"),input("ENter site:\n"),input("ENter CITY"))
+
+contact_str = ",".join(contact_database[1:8])
+print(contact_str)
+print(contact_database[1:8])
+#add_contact(contact_str, "Илья Маковецкий","3","8 800 333-96-05","management-msk@elevel.ru")
+#add_contact(contact_str, "Наталья Кудрик","3","8 800 333-96-05","management-spb@elevel.ru")
+add_contact(contact_str, input("Enter name:\n"),"3",input("Enter phone:\n"),input("ENter email:\n"))
 '''
 SELECT items.title, orders_from.customer,orders_from.find_field  
 FROM orders_from, items 
 WHERE orders_from.id = items.customer_id ;
 '''
-add_item("1","world")
+#add_item("1","world")
 temp_list = list()
 
 try:
