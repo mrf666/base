@@ -115,6 +115,10 @@ add_contact(contact_str, input("Enter name:\n"),"3",input("Enter phone:\n"),inpu
 SELECT items.title, orders_from.customer,orders_from.find_field  
 FROM orders_from, items 
 WHERE orders_from.id = items.customer_id ;
+
+SELECT organization.organization_title,organization.organization_field, contact_database.name, contact_database.number,contact_database.email  
+FROM contact_database, organization 
+WHERE organization.id = contact_database.organization_id ;
 '''
 #add_item("1","world")
 temp_list = list()
